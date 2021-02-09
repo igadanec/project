@@ -20,7 +20,8 @@ module.exports = function (/* ctx */) {
     // https://quasar.dev/quasar-cli/boot-files
     boot: [
 
-      'axios'
+      'axios',
+      'vue-graph'
     ],
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
@@ -64,12 +65,12 @@ module.exports = function (/* ctx */) {
 
       // https://quasar.dev/quasar-cli/handling-webpack
       extendWebpack (cfg) {
-        cfg.module.rules.push({
+        /* cfg.module.rules.push({
           enforce: 'pre',
           test: /\.(js|vue)$/,
           loader: 'eslint-loader',
           exclude: /node_modules/
-        })
+        }) */
       }
     },
 
@@ -183,7 +184,7 @@ module.exports = function (/* ctx */) {
       builder: {
         // https://www.electron.build/configuration/configuration
 
-        appId: 'sarturatest'
+        appId: 'test'
       },
 
       // More info: https://quasar.dev/quasar-cli/developing-electron-apps/node-integration

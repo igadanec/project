@@ -1,10 +1,15 @@
 <template>
-  <q-page class="flex flex-center">
+  <q-page>
+    HELOOO AAAAA
+    <Graph/>
   </q-page>
 </template>
 
 <script>
 export default {
-  name: 'PageIndex'
+  name: 'PageIndex',
+  components: {
+    Graph: () => import('../components/graph')
+  }
 }
 </script>

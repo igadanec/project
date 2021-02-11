@@ -33,12 +33,15 @@ export default {
         },
         plotOptions: {
           bar: {
-            horizontal: true
+            horizontal: true,
+            distributed: true
           }
-        }
+        },
+        colors: ['#0bff00', '#0085ff', '#ff0000']
       },
       series: [
         {
+          name: 'currency',
           data: this.data
         }
       ]

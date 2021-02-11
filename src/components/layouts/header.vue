@@ -1,7 +1,7 @@
 <template>
   <div>
     <q-layout view="hHh Lpr lff">
-      <q-header elevated class="bg-black">
+      <q-header elevated class="bg-blue">
         <q-toolbar>
           <q-btn flat @click="drawer = !drawer" round dense icon="menu" />
           <q-toolbar-title>Header</q-toolbar-title>
@@ -14,7 +14,7 @@
         :width="200"
         :breakpoint="500"
         bordered
-        content-class="bg-grey-3"
+        content-class="bg-grey-2"
       >
         <q-scroll-area class="fit">
           <q-list>

@@ -1,15 +1,18 @@
 <template>
-  <q-page class="q-pa-lg">
+  <q-page class="q-pa-lg" :class="{'loader': isLoading}">
     <template v-if="isLoading">
-      LOADING...
+     <Loader/>
     </template>
     <template v-else-if="isError">
       <img class="notify" src="~/src/assets/notify.svg" alt="notify">
       <p class="info">Access to XMLHttpRequest at <a href="http://api.hnb.hr/tecajn/v1" target="_blank">http://api.hnb.hr/tecajn/v1</a> has been blocked by CORS policy.</p>
       <p class="info">Please visit <a href="https://cors-anywhere.herokuapp.com/corsdemo" target="_blank">https://cors-anywhere.herokuapp.com/corsdemo</a>
       to request temporary access to the demo server.</p>
+      <p class="info">After requesting temporary access to the demo server. Please refresh page.</p>
     </template>
-    <template v-else>
+    <template>
+      {{ currency.value }}
+      <q-select outlined v-model="currency" :options="options" label="Outlined"  @input="getCurrency()" />
       <Graph type="bar"
              :categories="['Kupovni za devize', 'Srednji za devize', 'Prodajni za devize']"
              :data="[buyCurrency, middleCurrency, sellCurrency]"
@@ -22,35 +25,68 @@
 export default {
   name: 'PageIndex',
   components: {
-    Graph: () => import('../components/graph')
+    Graph: () => import('../components/graph'),
+    Loader: () => import('../components/loader')
   },
   data () {
     return {
+      allCurrencies: [],
       buyCurrency: '',
       sellCurrency: '',
       middleCurrency: '',
       isLoading: false,
-      isError: false
+      isError: false,
+      currency: {
+        label: 'EURO',
+        value: 'EUR'
+      },
+      options: [
+        {
+          label: 'EURO',
+          value: 'EUR'
+        },
+        {
+          label: 'DOLAR',
+          value: 'USD'
+        },
+        {
+          label: 'FUNTA',
+          value: 'GBP'
+        }
+      ]
     }
   },
   created () {
-    this.isLoading = true
-    this.$store.dispatch('module/getCurrency', { valuta: 'EUR' }).then((res) => {
-      this.isLoading = false
-      console.log(res.data)
-      this.buyCurrency = res.data[0]['Kupovni za devize'].replace(',', '.')
-      this.sellCurrency = res.data[0]['Prodajni za devize'].replace(',', '.')
-      this.middleCurrency = res.data[0]['Srednji za devize'].replace(',', '.')
-    }).catch((err) => {
-      this.isLoading = false
-      this.isError = true
-      console.log(err)
-    })
+    this.getCurrency()
+  },
+  methods: {
+    getCurrency () {
+      this.isLoading = true
+      this.$axios.get(`https://cors-anywhere.herokuapp.com/http://api.hnb.hr/tecajn/v1?valuta=${this.currency.value}`).then((res) => {
+        setTimeout(() => {
+          this.isLoading = false
+        }, 1000)
+        console.log(res.data)
+        this.allCurrencies = res.data
+        this.buyCurrency = this.allCurrencies[0]['Kupovni za devize'].replace(',', '.')
+        this.sellCurrency = this.allCurrencies[0]['Prodajni za devize'].replace(',', '.')
+        this.middleCurrency = this.allCurrencies[0]['Srednji za devize'].replace(',', '.')
+      }).catch((err) => {
+        this.isLoading = false
+        this.isError = true
+        return err
+      })
+    }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+.loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .notify {
   margin: 0 auto 40px;
   display: block;

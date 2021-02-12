@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <apexchart
-      width="500"
+      style="max-width: 800px;"
       type="bar"
       :options="chartOptions"
       :series="series"
@@ -37,7 +37,7 @@ export default {
             distributed: true
           }
         },
-        colors: ['#0bff00', '#0085ff', '#ff0000']
+        colors: ['#21BA45', '#0085ff', '#ff0000']
       },
       series: [
         {

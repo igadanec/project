@@ -1,7 +1,7 @@
 <template>
-  <div id="app">
+  <div id="app" class="chart-container">
     <apexchart
-      style="max-width: 800px;"
+      style="width: 100%;"
       type="bar"
       :options="chartOptions"
       :series="series"
@@ -49,3 +49,11 @@ export default {
   }
 }
 </script>
+
+<style scoped lang="scss">
+.chart-container {
+  border: 1px solid rgba(0, 0, 0, 0.24);
+  padding: 20px;
+  border-radius: 4px;
+}
+</style>

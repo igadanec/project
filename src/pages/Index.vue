@@ -10,13 +10,22 @@
       to request temporary access to the demo server.</p>
       <p class="info">After requesting temporary access to the demo server. Please refresh page.</p>
     </template>
-    <template>
-      {{ currency.value }}
-      <q-select outlined v-model="currency" :options="options" label="Outlined"  @input="getCurrency()" />
-      <Graph type="bar"
-             :categories="['Kupovni za devize', 'Srednji za devize', 'Prodajni za devize']"
-             :data="[buyCurrency, middleCurrency, sellCurrency]"
-             />
+    <template v-else>
+      <div class="currency-container">
+        <q-select
+          class="q-mb-lg"
+          outlined
+          label="Select currency"
+          v-model="currency"
+          :options="options"
+          @input="getCurrency()"
+        />
+        <Graph
+          type="bar"
+          :categories="['Kupovni za devize', 'Srednji za devize', 'Prodajni za devize']"
+          :data="[buyCurrency, middleCurrency, sellCurrency]"
+        />
+      </div>
     </template>
   </q-page>
 </template>
@@ -37,20 +46,20 @@ export default {
       isLoading: false,
       isError: false,
       currency: {
-        label: 'EURO',
+        label: 'EUR',
         value: 'EUR'
       },
       options: [
         {
-          label: 'EURO',
+          label: 'EUR',
           value: 'EUR'
         },
         {
-          label: 'DOLAR',
+          label: 'USD',
           value: 'USD'
         },
         {
-          label: 'FUNTA',
+          label: 'GBP',
           value: 'GBP'
         }
       ]
@@ -82,6 +91,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.currency-container {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1000px;
+}
 .loader {
   display: flex;
   align-items: center;

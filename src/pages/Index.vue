@@ -16,7 +16,7 @@
           class="q-mb-lg"
           outlined
           label="Select currency"
-          v-model="currency"
+          v-model="savedCurrency"
           :options="options"
           @input="getCurrency()"
         />
@@ -46,10 +46,14 @@ export default {
       isLoading: false,
       isError: false,
       currency: {
-        label: 'EUR',
-        value: 'EUR'
+        label: 'BAM',
+        value: 'BAM'
       },
       options: [
+        {
+          label: 'BAM',
+          value: 'BAM'
+        },
         {
           label: 'EUR',
           value: 'EUR'
@@ -67,6 +71,20 @@ export default {
   },
   created () {
     this.getCurrency()
+    if (localStorage.getItem('currencyStore')) {
+      const getStoreCurrency = localStorage.getItem('currencyStore', JSON.stringify(this.savedCurrency))
+      this.$store.commit('module/updateCurrency', JSON.parse(getStoreCurrency))
+    }
+  },
+  computed: {
+    savedCurrency: {
+      get () {
+        return this.$store.state.module.savedCurrency
+      },
+      set (value) {
+        this.$store.commit('module/updateCurrency', value)
+      }
+    }
   },
   methods: {
     getCurrency () {
@@ -75,7 +93,6 @@ export default {
         setTimeout(() => {
           this.isLoading = false
         }, 1000)
-        console.log(res.data)
         this.allCurrencies = res.data
         this.buyCurrency = this.allCurrencies[0]['Kupovni za devize'].replace(',', '.')
         this.sellCurrency = this.allCurrencies[0]['Prodajni za devize'].replace(',', '.')

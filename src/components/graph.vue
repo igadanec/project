@@ -28,8 +28,27 @@ export default {
         chart: {
           id: 'vuechart-example'
         },
+        dataLabels: {
+          enabled: true,
+          formatter: function (val, opt) {
+            return opt.w.globals.labels[opt.dataPointIndex] + ':  ' + val + ' KN'
+          }
+        },
         xaxis: {
-          categories: this.categories
+          categories: this.categories,
+          labels: {
+            formatter: function (value) {
+              return value + ' KN'
+            }
+          }
+        },
+        yaxis: {
+          labels: {
+            show: false,
+            formatter: function (value) {
+              return value + ' KN'
+            }
+          }
         },
         plotOptions: {
           bar: {

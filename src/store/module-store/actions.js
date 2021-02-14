@@ -1,1 +1,2 @@
-export function example ({ commit }, payload) {}
+export function example () {
+}

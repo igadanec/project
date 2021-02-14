@@ -34,7 +34,7 @@
                     <q-icon name="auto_graph" />
                     </q-item-section>
                     <q-item-section>
-                     Currency
+                     Currency by Country
                     </q-item-section>
                 </q-item>
               </router-link>

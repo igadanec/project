@@ -16,7 +16,7 @@
           class="q-mb-lg"
           outlined
           label="Select currency"
-          v-model="currency"
+          v-model="savedCurrencyCountry"
           :options="options"
           @input="getCurrency()"
         />
@@ -32,7 +32,7 @@
 
 <script>
 export default {
-  name: 'CurrencyCountry',
+  name: 'Currency',
   components: {
     Graph: () => import('../components/graph'),
     Loader: () => import('../components/loader')
@@ -45,6 +45,10 @@ export default {
       middleCurrency: '',
       isLoading: false,
       isError: false,
+      currency: {
+        label: 'Bosna i Hercegovina',
+        value: 'BAM'
+      },
       options: [
         {
           label: 'Bosna i Hercegovina',
@@ -59,7 +63,7 @@ export default {
           value: 'USD'
         },
         {
-          label: 'Velika Britanija',
+          label: 'Ujedinjeno Kraljevstvo',
           value: 'GBP'
         }
       ]
@@ -67,6 +71,20 @@ export default {
   },
   created () {
     this.getCurrency()
+    if (localStorage.getItem('currencyStoreCurrency')) {
+      const getStoreCurrencyCountry = localStorage.getItem('currencyStoreCurrency', JSON.stringify(this.savedCurrencyCountry))
+      this.$store.commit('module/updateCurrencyCountry', JSON.parse(getStoreCurrencyCountry))
+    }
+  },
+  computed: {
+    savedCurrencyCountry: {
+      get () {
+        return this.$store.state.module.savedCurrencyCountry
+      },
+      set (value) {
+        this.$store.commit('module/updateCurrencyCountry', value)
+      }
+    }
   },
   methods: {
     getCurrency () {

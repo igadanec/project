@@ -32,7 +32,7 @@
 
 <script>
 export default {
-  name: 'PageIndex',
+  name: 'Currency',
   components: {
     Graph: () => import('../components/graph'),
     Loader: () => import('../components/loader')

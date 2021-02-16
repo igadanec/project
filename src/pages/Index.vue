@@ -45,10 +45,6 @@ export default {
       middleCurrency: '',
       isLoading: false,
       isError: false,
-      currency: {
-        label: 'BAM',
-        value: 'BAM'
-      },
       options: [
         {
           label: 'BAM',
@@ -89,7 +85,7 @@ export default {
   methods: {
     getCurrency () {
       this.isLoading = true
-      this.$axios.get(`https://cors-anywhere.herokuapp.com/http://api.hnb.hr/tecajn/v1?valuta=${this.currency.value}`).then((res) => {
+      this.$axios.get(`https://cors-anywhere.herokuapp.com/http://api.hnb.hr/tecajn/v1?valuta=${this.savedCurrency.value}`).then((res) => {
         setTimeout(() => {
           this.isLoading = false
         }, 1000)

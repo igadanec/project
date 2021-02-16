@@ -45,10 +45,6 @@ export default {
       middleCurrency: '',
       isLoading: false,
       isError: false,
-      currency: {
-        label: 'Bosna i Hercegovina',
-        value: 'BAM'
-      },
       options: [
         {
           label: 'Bosna i Hercegovina',
@@ -89,7 +85,7 @@ export default {
   methods: {
     getCurrency () {
       this.isLoading = true
-      this.$axios.get(`https://cors-anywhere.herokuapp.com/http://api.hnb.hr/tecajn/v1?valuta=${this.currency.value}`).then((res) => {
+      this.$axios.get(`https://cors-anywhere.herokuapp.com/http://api.hnb.hr/tecajn/v1?valuta=${this.savedCurrencyCountry.value}`).then((res) => {
         setTimeout(() => {
           this.isLoading = false
         }, 1000)
